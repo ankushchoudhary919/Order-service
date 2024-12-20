@@ -1,14 +1,23 @@
 version: 0.2
 
 phases:
+  install:
+    runtime-versions:
+      java: 17         # Replace with the correct JDK version (e.g., corretto8, corretto11, corretto17)
+    commands:
+      - echo Installing Maven dependencies...
+      - mvn clean install -DskipTests -U  # Install dependencies and update the local Maven repo
   build:
     commands:
       - echo Entered the build phase...
-      - mvn clean package
+      - mvn clean package                # Run the Maven package phase
   post_build:
     commands:
-      - echo Build completed successfully
+      - echo Build completed successfully.
 artifacts:
   files:
-    - target/order-service.jar
+    - target/order-service.jar           # Ensure this matches your output file name
   discard-paths: yes
+cache:
+  paths:
+    - "/root/.m2/**/*"                   # Cache Maven dependencies for faster builds
